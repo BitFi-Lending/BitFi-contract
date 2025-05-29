@@ -26,8 +26,8 @@ BitFi is undergoing continuous security testing. Formal audits are in progress.
 
 ## 🌐 Links
 
-Website: https://bit-fi.xyz/
-App link: https://app.bit-fi.xyz/
-X (Twitter): https://x.com/bit_fi_
+- Website: https://bit-fi.xyz/
+- App link: https://app.bit-fi.xyz/
+- X (Twitter): https://x.com/bit_fi_
 
 
