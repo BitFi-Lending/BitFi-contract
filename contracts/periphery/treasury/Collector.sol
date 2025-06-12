@@ -4,6 +4,7 @@ pragma solidity ^0.8.10;
 import {VersionedInitializable} from '../../protocol/libraries/upgradeability/VersionedInitializable.sol';
 import {IERC20} from '../../dependencies/openzeppelin/contracts/IERC20.sol';
 import {ICollector} from './interfaces/ICollector.sol';
+import {SafeERC20} from '../../dependencies/openzeppelin/contracts/SafeERC20.sol';
 
 /**
  * @title Collector
@@ -51,7 +52,7 @@ contract Collector is VersionedInitializable, ICollector {
     address recipient,
     uint256 amount
   ) external onlyFundsAdmin {
-    token.approve(recipient, amount);
+    SafeERC20.safeApprove(token, recipient, amount);
   }
 
   /// @inheritdoc ICollector
@@ -60,7 +61,7 @@ contract Collector is VersionedInitializable, ICollector {
     address recipient,
     uint256 amount
   ) external onlyFundsAdmin {
-    token.transfer(recipient, amount);
+    SafeERC20.safeTransfer(token, recipient, amount);
   }
 
   /// @inheritdoc ICollector

@@ -49,10 +49,9 @@ contract UiIncentiveDataProviderV3 is IUiIncentiveDataProviderV3 {
       DataTypes.ReserveData memory baseData = pool.getReserveData(reserves[i]);
 
       // Get bTokens rewards information
-      // TODO: check that this is deployed correctly on contract and remove casting
-      IRewardsController bTokenIncentiveController = IRewardsController(
-        address(IncentivizedERC20(baseData.bTokenAddress).getIncentivesController())
-      );
+      address controllerAddress = address(IncentivizedERC20(baseData.bTokenAddress).getIncentivesController());
+      require(controllerAddress != address(0), "Invalid incentives controller");
+      IRewardsController bTokenIncentiveController = IRewardsController(controllerAddress);
       RewardInfo[] memory aRewardsInformation;
       if (address(bTokenIncentiveController) != address(0)) {
         address[] memory bTokenRewardAddresses = bTokenIncentiveController.getRewardsByAsset(

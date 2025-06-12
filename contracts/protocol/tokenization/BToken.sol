@@ -177,6 +177,8 @@ contract BToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
     bytes32 s
   ) external override {
     require(owner != address(0), Errors.ZERO_ADDRESS_NOT_VALID);
+    require(uint256(s) <= 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0, Errors.INVALID_S_VALUE);
+    require(v == 27 || v == 28, Errors.INVALID_V_VALUE);
     //solium-disable-next-line
     require(block.timestamp <= deadline, Errors.INVALID_EXPIRATION);
     uint256 currentValidNonce = _nonces[owner];

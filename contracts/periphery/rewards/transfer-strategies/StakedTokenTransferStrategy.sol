@@ -7,6 +7,7 @@ import {ITransferStrategyBase} from '../interfaces/ITransferStrategyBase.sol';
 import {TransferStrategyBase} from './TransferStrategyBase.sol';
 import {GPv2SafeERC20} from '../../../dependencies/gnosis/contracts/GPv2SafeERC20.sol';
 import {IERC20} from '../../../dependencies/openzeppelin/contracts/IERC20.sol';
+import {SafeERC20} from '../../../dependencies/openzeppelin/contracts/SafeERC20.sol';
 
 /**
  * @title StakedTokenTransferStrategy
@@ -28,8 +29,8 @@ contract StakedTokenTransferStrategy is TransferStrategyBase, IStakedTokenTransf
     STAKE_CONTRACT = stakeToken;
     UNDERLYING_TOKEN = STAKE_CONTRACT.STAKED_TOKEN();
 
-    IERC20(UNDERLYING_TOKEN).approve(address(STAKE_CONTRACT), 0);
-    IERC20(UNDERLYING_TOKEN).approve(address(STAKE_CONTRACT), type(uint256).max);
+    SafeERC20.safeApprove(IERC20(UNDERLYING_TOKEN), address(STAKE_CONTRACT), 0);
+    SafeERC20.safeApprove(IERC20(UNDERLYING_TOKEN), address(STAKE_CONTRACT), type(uint256).max);
   }
 
   /// @inheritdoc TransferStrategyBase
@@ -52,13 +53,13 @@ contract StakedTokenTransferStrategy is TransferStrategyBase, IStakedTokenTransf
 
   /// @inheritdoc IStakedTokenTransferStrategy
   function renewApproval() external onlyRewardsAdmin {
-    IERC20(UNDERLYING_TOKEN).approve(address(STAKE_CONTRACT), 0);
-    IERC20(UNDERLYING_TOKEN).approve(address(STAKE_CONTRACT), type(uint256).max);
+    SafeERC20.safeApprove(IERC20(UNDERLYING_TOKEN), address(STAKE_CONTRACT), 0);
+    SafeERC20.safeApprove(IERC20(UNDERLYING_TOKEN), address(STAKE_CONTRACT), type(uint256).max);
   }
 
   /// @inheritdoc IStakedTokenTransferStrategy
   function dropApproval() external onlyRewardsAdmin {
-    IERC20(UNDERLYING_TOKEN).approve(address(STAKE_CONTRACT), 0);
+    SafeERC20.safeApprove(IERC20(UNDERLYING_TOKEN), address(STAKE_CONTRACT), 0);
   }
 
   /// @inheritdoc IStakedTokenTransferStrategy
